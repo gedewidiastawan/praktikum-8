@@ -7,13 +7,16 @@ class PetugasController extends CI_Controller {
 		$this->load->model('Petugas');
 	}
 	public function index() { 
+		if (!$this->session->userdata('isLoggedIn')) redirect(base_url().'login','refresh');
 		$data['dataPetugas'] = $this->Petugas->getListPetugas();
 		$this->template->load('template','petugas/index',$data);
 	}
 	public function create(){
+		if (!$this->session->userdata('isLoggedIn')) redirect(base_url().'login','refresh');
 		$this->template->load('template','petugas/create');
 	}
 	public function store(){
+		if (!$this->session->userdata('isLoggedIn')) redirect(base_url().'login','refresh');
 		$responses['status'] = 1;
 		$responses['message'] = "";
 
@@ -51,14 +54,17 @@ class PetugasController extends CI_Controller {
 		echo json_encode($responses);
 	}
 	public function delete(){
+		if (!$this->session->userdata('isLoggedIn')) redirect(base_url().'login','refresh');
 		$result = $this->Petugas->delete($this->input->post('kode_petugas'));
 		echo json_encode($result);
 	}	  
 	public function edit($kode_petugas){
+		if (!$this->session->userdata('isLoggedIn')) redirect(base_url().'login','refresh');
 		$data['dataPetugas'] = $this->Petugas->getDataPetugas($kode_petugas);
 		$this->template->load('template','petugas/edit',$data);
 	}
 	public function update($kode_petugas){
+		if (!$this->session->userdata('isLoggedIn')) redirect(base_url().'login','refresh');
 		$result = $this->Petugas->update($kode_petugas);
 		echo json_encode($result);
 	} 
